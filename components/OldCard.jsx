@@ -1,6 +1,6 @@
 import { View, Text, Image, StyleSheet, TextInput } from 'react-native'
 import { useState, useEffect } from 'react'
-const Card = ({formData}) => {
+const OldCard = ({formData}) => {
     const cardTypes = [
         {type: 'visa', re: '^4'},
         {type: 'amex', re: '^(34|37)'},
@@ -235,4 +235,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Card;
+export default OldCard;

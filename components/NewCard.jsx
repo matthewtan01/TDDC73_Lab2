@@ -1,7 +1,7 @@
 import { View, Text, Image, StyleSheet, Animated, Easing } from 'react-native';
 import { useState, useEffect, useRef } from 'react';
 
-const Card1 = ({ formData }) => {
+const NewCard = ({ formData }) => {
   const cardTypes = [
     { type: 'visa', re: '^4' },
     { type: 'amex', re: '^(34|37)' },
@@ -228,4 +228,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Card1;
+export default NewCard;

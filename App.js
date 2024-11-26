@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import InputContainer from './components/InputContainer';
-import Card from './components/Card';
-import Card1 from './components/Card1';
+import OldCard from './components/OldCard';
+import NewCard from './components/NewCard';
 import { useState } from 'react'
 
 export default function App() {
@@ -19,7 +19,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.cardWrapper}>
-        <Card1 formData={formData} />
+        <NewCard formData={formData} />
       </View>
       <View style={styles.inputWrapper}>
         <InputContainer formData={formData} updateFormData={updateFormData} />

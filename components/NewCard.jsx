@@ -1,7 +1,7 @@
 import { View, Text, Image, StyleSheet, Animated, Easing } from 'react-native';
 import { useState, useEffect, useRef } from 'react';
 
-const NewCard = ({ formData }) => {
+const NewCard = ({ formData, useFormData }) => {
   const cardTypes = [
     { type: 'visa', re: '^4' },
     { type: 'amex', re: '^(34|37)' },
@@ -15,7 +15,7 @@ const NewCard = ({ formData }) => {
     const match = cardTypes.find((cc) => cardNumber.match(new RegExp(cc.re)) != null);
     return match ? match.type : 'visa';
   };
-
+  
   const cardImages = {
     visa: require('../assets/images/visa.png'),
     amex: require('../assets/images/amex.png'),
@@ -25,8 +25,8 @@ const NewCard = ({ formData }) => {
   };
 
   const getImage = (cardType) => cardImages[cardType];
-
   const cardType = getCardType();
+  
   const [placeholder, setPlaceHolder] = useState('#### #### #### #####');
   const [placeholder1, setPlaceHolder1] = useState('MM/YY');
 

@@ -1,6 +1,7 @@
 import { View, Text, TextInput, StyleSheet, Button } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useState } from 'react';
+import { getCardType } from '../utils/cardUtils'
 
 const currentYear = new Date().getFullYear();
 const endYear = currentYear + 10; 
@@ -23,6 +24,18 @@ const monthArray = [
 
 
 const InputContainer = ({formData, updateFormData}) => {
+
+    const cardType = getCardType(formData.cardNum);
+
+    const getMaxLength = () => {
+        if (cardType == 'amex'){
+            return 15;
+        }
+        else{
+            return 16;
+        }
+    }
+    
     // DropDownPicker state
     const [monthOpen, setMonthOpen] = useState(false);
     const [yearOpen, setYearOpen] = useState(false);
@@ -41,7 +54,7 @@ const InputContainer = ({formData, updateFormData}) => {
                         updateFormData("cardNum", numericText);
                     }}
                     keyboardType="numeric"
-                    maxLength={16}
+                    maxLength={getMaxLength()}
                 />
             </View>
             <View style={styles.block}>

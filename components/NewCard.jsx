@@ -1,21 +1,11 @@
 import { View, Text, Image, StyleSheet, Animated, Easing } from 'react-native';
 import { useState, useEffect, useRef } from 'react';
+import {getCardType} from '../utils/cardUtils'
 
-const NewCard = ({ formData, useFormData }) => {
-  const cardTypes = [
-    { type: 'visa', re: '^4' },
-    { type: 'amex', re: '^(34|37)' },
-    { type: 'mastercard', re: '^5[1-5]' },
-    { type: 'discover', re: '^6011' },
-    { type: 'troy', re: '^9792' },
-  ];
+const NewCard = ({ formData }) => {
 
-  const getCardType = () => {
-    let cardNumber = formData.cardNum;
-    const match = cardTypes.find((cc) => cardNumber.match(new RegExp(cc.re)) != null);
-    return match ? match.type : 'visa';
-  };
-  
+  const cardType = getCardType(formData.cardNum);
+
   const cardImages = {
     visa: require('../assets/images/visa.png'),
     amex: require('../assets/images/amex.png'),
@@ -25,9 +15,8 @@ const NewCard = ({ formData, useFormData }) => {
   };
 
   const getImage = (cardType) => cardImages[cardType];
-  const cardType = getCardType();
   
-  const [placeholder, setPlaceHolder] = useState('#### #### #### #####');
+  const [placeholder, setPlaceHolder] = useState('#### #### #### ####');
   const [placeholder1, setPlaceHolder1] = useState('MM/YY');
 
   // Animation value
@@ -36,9 +25,33 @@ const NewCard = ({ formData, useFormData }) => {
   // Update placeholder for card number
   useEffect(() => {
     const rawCardNum = formData.cardNum || '';
-    const basePlaceholder = '################';
-    const updatedPlaceholder = rawCardNum + basePlaceholder.slice(rawCardNum.length);
-    const formatted = updatedPlaceholder.match(/.{1,4}/g)?.join(' ') || '';
+    const isAmex = cardType == 'amex';
+
+    let formatted = '';
+    if (isAmex) {
+        const blocks = [4, 6, 5];
+        let start = 0;
+
+        formatted = blocks
+            .map((block) => {
+                const segment = rawCardNum.slice(start, start + block).padEnd(block, '#'); // Fill with #
+                start += block;
+                return segment;
+            })
+            .join(' '); // Join with spaces
+    } else {
+        const blocks = [4, 4, 4, 4];
+        let start = 0;
+
+        formatted = blocks
+            .map((block) => {
+                const segment = rawCardNum.slice(start, start + block).padEnd(block, '#'); // Fill with #
+                start += block;
+                return segment;
+            })
+            .join(' '); // Join with spaces
+    }
+
     setPlaceHolder(formatted);
   }, [formData.cardNum]);
 
@@ -158,9 +171,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 80,
     color: 'white',
-    left: 25,
+    left: '0',
+    right: '0',
     fontSize: 22,
     fontFamily: 'monospace',
+    textAlign: 'center',
   },
   cardname_container: {
     position: 'absolute',

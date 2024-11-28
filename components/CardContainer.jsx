@@ -2,7 +2,7 @@ import { View, Text, Image, StyleSheet, Animated, Easing } from 'react-native';
 import { useState, useEffect, useRef } from 'react';
 import {getCardType} from '../utils/cardUtils'
 
-const NewCard = ({ formData }) => {
+const CardContainer = ({ formData }) => {
 
   const cardType = getCardType(formData.cardNum);
 
@@ -243,4 +243,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NewCard;
+export default CardContainer;
